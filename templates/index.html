@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MONITOR | System Observability</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">M</span> MONITOR<span class="dot">.</span></div>
+    <div class="nav-label">OBSERVABILITY</div>
+    <a class="nav-item active" href="#overview">◫ &nbsp; Overview</a>
+    <a class="nav-item" href="#charts">⌁ &nbsp; Performance</a>
+    <a class="nav-item" href="#processes">▤ &nbsp; Processes</a>
+    <div class="sidebar-bottom">
+      <div class="status-dot"></div>
+      <div><b>Local agent</b><small>Collecting metrics</small></div>
+    </div>
+  </aside>
+
+  <main class="main" id="overview">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">INFRASTRUCTURE / LOCAL HOST</div>
+        <h1>System Overview</h1>
+        <p class="subtitle">Real-time performance and resource telemetry</p>
+      </div>
+      <div class="live-pill"><span class="pulse"></span> LIVE <span id="updated">Connecting…</span></div>
+    </header>
+
+    <section class="hostbar">
+      <div><span class="host-symbol">⌘</span><div><small>HOSTNAME</small><b id="hostname">Loading…</b></div></div>
+      <div><span class="host-symbol">◈</span><div><small>PLATFORM</small><b id="platform">Loading…</b></div></div>
+      <div><span class="host-symbol">◷</span><div><small>SYSTEM UPTIME</small><b id="uptime">Loading…</b></div></div>
+      <div><span class="host-symbol">▤</span><div><small>PROCESSES</small><b id="processCount">—</b></div></div>
+    </section>
+
+    <section class="metric-grid">
+      <article class="metric-card">
+        <div class="card-heading"><span>CPU UTILIZATION</span><span class="metric-icon blue">⌁</span></div>
+        <div class="metric-value"><span id="cpuValue">—</span><small>%</small></div>
+        <div class="progress"><div id="cpuBar" class="progress-fill blue-bg"></div></div>
+        <div class="card-foot"><span>Logical cores</span><b id="cpuCores">—</b></div>
+      </article>
+      <article class="metric-card">
+        <div class="card-heading"><span>MEMORY USAGE</span><span class="metric-icon purple">▥</span></div>
+        <div class="metric-value"><span id="memoryValue">—</span><small>%</small></div>
+        <div class="progress"><div id="memoryBar" class="progress-fill purple-bg"></div></div>
+        <div class="card-foot"><span id="memoryUsed">— used</span><b id="memoryTotal">— total</b></div>
+      </article>
+      <article class="metric-card">
+        <div class="card-heading"><span>DISK USAGE (/)</span><span class="metric-icon green">▤</span></div>
+        <div class="metric-value"><span id="diskValue">—</span><small>%</small></div>
+        <div class="progress"><div id="diskBar" class="progress-fill green-bg"></div></div>
+        <div class="card-foot"><span id="diskUsed">— used</span><b id="diskTotal">— total</b></div>
+      </article>
+      <article class="metric-card">
+        <div class="card-heading"><span>NETWORK TRAFFIC</span><span class="metric-icon orange">⇅</span></div>
+        <div class="metric-value"><span id="networkValue">—</span><small> KB/s</small></div>
+        <div class="network-pair"><span>↓ <b id="downloadRate">0 KB/s</b></span><span>↑ <b id="uploadRate">0 KB/s</b></span></div>
+        <div class="card-foot"><span>Received</span><b id="receivedTotal">—</b></div>
+      </article>
+    </section>
+
+    <section class="chart-grid" id="charts">
+      <article class="panel">
+        <div class="panel-header"><div><h2>Resource utilization</h2><p>CPU and memory over time</p></div><span class="tag">LIVE SERIES</span></div>
+        <div class="chart-wrap"><canvas id="resourceChart"></canvas></div>
+        <div class="legend"><span><i class="legend-blue"></i>CPU</span><span><i class="legend-purple"></i>Memory</span></div>
+      </article>
+      <article class="panel">
+        <div class="panel-header"><div><h2>Network throughput</h2><p>Inbound and outbound traffic</p></div><span class="tag">KB/S</span></div>
+        <div class="chart-wrap"><canvas id="networkChart"></canvas></div>
+        <div class="legend"><span><i class="legend-green"></i>Download</span><span><i class="legend-orange"></i>Upload</span></div>
+      </article>
+    </section>
+
+    <section class="panel process-panel" id="processes">
+      <div class="panel-header"><div><h2>Top processes</h2><p>Processes ranked by memory usage</p></div><span class="tag" id="processTag">LIVE</span></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>PROCESS</th><th>PID</th><th>MEMORY USAGE</th><th>STATUS</th></tr></thead>
+          <tbody id="processTable"><tr><td colspan="4">Waiting for metrics…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <footer><span><i class="status-dot"></i> METRICS STREAM ACTIVE</span><span>MONITOR <b>v1.0.0</b> · LOCAL OBSERVABILITY</span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
+
